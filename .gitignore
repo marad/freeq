@@ -15,4 +15,7 @@ classes/
 .lein-env
 log
 resources/public/js
+.lein-failures
+.lein-repl-history
+resources/public/css
 target
