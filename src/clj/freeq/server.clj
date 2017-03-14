@@ -12,24 +12,28 @@
   (:gen-class))
 
 (defroutes routes
-  (GET "/requests" _
-       {:status 200
-        :headers {"Content-Type" "application/edn"}
-        :body (str {:requests [{:_id 1
-                                :title "Request 1 title"
-                                :desc "Description"
-                                :likes 2}
-                               {:_id 2
-                                :title "Request 2 title"
-                                :desc "Description 2"
-                                :likes 2}
-                               ]})}
-       )
-  (GET "/" _
-       {:status 200
-        :headers {"Content-Type" "text/html; charset=utf-8"}
-        :body (io/input-stream (io/resource "public/index.html"))})
-  (resources "/"))
+           (GET "/requests" _
+             {:status  200
+              :headers {"Content-Type" "application/edn"}
+              :body    (str {:requests [{:_id   1
+                                         :title "Request 1 title"
+                                         :desc  "Description"
+                                         :likes 2}
+                                        {:_id   2
+                                         :title "Request 2 title"
+                                         :desc  "Description 2"
+                                         :likes 2}
+                                        ]})}
+             )
+           (POST "/add-request" PostRequest
+             {:status 201}
+             )
+           (GET "/" _
+             {:status  200
+              :headers {"Content-Type" "text/html; charset=utf-8"}
+              :body    (io/input-stream (io/resource "public/index.html"))})
+
+           (resources "/"))
 
 (def http-handler
   (-> routes

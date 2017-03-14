@@ -10,6 +10,7 @@
 
 (defn greeting []
   [:div
+   [:button {:on-click #(do add-request)} "Add request"]
    [:button {:on-click (fn [] 
                            (go (let [requests (<! (http/get "/requests"))]
                                  (swap! app-state #(assoc % :text (:body requests))))))} 
