@@ -22,9 +22,10 @@
   (reset! db nil)
   (mg/disconnect mongo))
 
-(defstate mongo
-  :start (start)
-  :stop (stop))
+;;(defstate mongo
+;;  :start (start)
+;;  :stop (stop))
+(def mongo (start))
 
 ;; Requests
 
