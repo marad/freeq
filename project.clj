@@ -16,11 +16,14 @@
                  [reagent "0.6.0-rc"]
                  [prismatic/schema "1.1.3"]
                  [cljs-http "0.1.42"]
+                 [com.novemberain/monger "3.1.0"]
+                 [mount "0.1.11"]
                  ]
 
   :plugins [[lein-cljsbuild "1.1.3"]
             [lein-environ "1.0.3"]
-            [lein-less "1.7.5"]]
+            [lein-less "1.7.5"]
+            [lein-embongo "0.2.2"]]
 
   :min-lein-version "2.6.1"
 

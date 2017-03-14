@@ -8,7 +8,8 @@
             [environ.core :refer [env]]
             [ring.adapter.jetty :refer [run-jetty]]
             [freeq.model :refer [Request Comment]]
-            )
+            [freeq.mongo :as mongo]
+            [mount.core :as mount])
   (:gen-class))
 
 (defroutes routes
@@ -42,6 +43,6 @@
       wrap-gzip))
 
 (defn -main [& [port]]
+  (println "Started states: " (mount/start))
   (let [port (Integer. (or port (env :port) 10555))]
-    (println "Starting server on port:" port)
     (run-jetty http-handler {:port port :join? false})))
