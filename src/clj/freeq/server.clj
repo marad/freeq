@@ -8,7 +8,8 @@
             [environ.core :refer [env]]
             [ring.adapter.jetty :refer [run-jetty]]
             [freeq.model :refer [Request Comment]]
-            [freeq.mongo :as mongo]
+            [freeq.mongo]
+            [freeq.requests :as requests]
             [mount.core :as mount])
   (:gen-class))
 
@@ -16,19 +17,13 @@
            (GET "/requests" _
              {:status  200
               :headers {"Content-Type" "application/edn"}
-              :body    (str {:requests [{:_id   1
-                                         :title "Request 1 title"
-                                         :desc  "Description"
-                                         :likes 2}
-                                        {:_id   2
-                                         :title "Request 2 title"
-                                         :desc  "Description 2"
-                                         :likes 2}
-                                        ]})}
-             )
-           (POST "/add-request" PostRequest
-             {:status 201}
-             )
+              :body    (str {:requests (requests/list-requests)})})
+
+           (POST "/add-request" req
+                 (let [body (-> req :body slurp read-string)]
+                   (requests/add-request body))
+                 {:status 201})
+
            (GET "/" _
              {:status  200
               :headers {"Content-Type" "text/html; charset=utf-8"}
@@ -46,3 +41,7 @@
   (println "Started states: " (mount/start))
   (let [port (Integer. (or port (env :port) 10555))]
     (run-jetty http-handler {:port port :join? false})))
+
+(comment
+  (def server (-main))
+  (.stop server))

@@ -11,7 +11,7 @@
                  [ring/ring-defaults "0.2.0"]
                  [bk/ring-gzip "0.1.1"]
                  [ring.middleware.logger "0.5.0"]
-                 [compojure "1.5.0"]
+                 [metosin/compojure-api "1.1.0"]
                  [environ "1.0.3"]
                  [reagent "0.6.0-rc"]
                  [prismatic/schema "1.1.3"]

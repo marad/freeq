@@ -1,9 +1,17 @@
 (ns freeq.requests
     (:require [freeq.mongo :as repo]
-              [freeq.model :refer [Request Comment]]
+              [freeq.model :refer [PostRequest Request Comment]]
               [schema.core :as s]))
 
-(s/defn list-requests :- [Request] []
-  (repo/get-requests)
-  )
+(defn uuid [] (str (java.util.UUID/randomUUID)))
 
+(s/defn list-requests :- [Request] []
+  (repo/get-requests))
+
+(s/defn add-request :- [Request]
+  [request :- PostRequest]
+  (let [request (assoc request
+                       :_id (uuid)
+                       :likes 0)]
+    (repo/add-request request)
+    request))
