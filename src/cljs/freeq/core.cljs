@@ -5,20 +5,22 @@
               [cljs.core.async :refer [<!]]
               [freeq.list :as reqlist]
               [freeq.add-requests :as addr]
-              [cljs.core.async :refer [<!]]))
+              [freeq.state :refer [app-state refresh-requests]]
+              [cljs.core.async :refer [<!]]
+              ))
 
 (enable-console-print!)
 
-(defonce app-state (atom {:text "Requests list"
-                          :requests []}))
+(def pages {:index #(reqlist/reqlist (:requests @app-state))
+            :add addr/add-request})
 
-(defn greeting []
+(defn render-page []
   [:div
-   [:button {:on-click (fn [] (go (let [requests (<! (http/get "/requests"))]
-                                 (swap! app-state #(assoc % :requests (:body requests))))))}
-    "Refresh requests"]
-   [:h1 (str (:text @app-state))]
-   [:div (reqlist/reqlist (:requests @app-state))]
-   ])
+   [:button {:on-click (fn [] 
+                           (swap! app-state #(assoc % :page :index))
+                           (refresh-requests))} "List"]
+   [:button {:on-click (fn [] (swap! app-state #(assoc % :page :add)))} "Add"]
+   ((pages (:page @app-state)))])
 
-(reagent/render [greeting] (js/document.getElementById "app"))
+(refresh-requests)
+(reagent/render [render-page] (js/document.getElementById "app"))

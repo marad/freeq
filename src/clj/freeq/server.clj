@@ -24,6 +24,12 @@
                    (requests/add-request body))
                  {:status 201})
 
+           (POST "/like-request" req
+                 (let [body (-> req :body slurp read-string)]
+                   (println "LIKING" body)
+                   )
+                 {:status 204})
+
            (GET "/" _
              {:status  200
               :headers {"Content-Type" "text/html; charset=utf-8"}
