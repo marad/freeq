@@ -4,7 +4,8 @@
               [cljs-http.client :as http]
               [cljs.core.async :refer [<!]]
               [freeq.list :as reqlist]
-              ))
+              [freeq.add-requests :as addr]
+              [cljs.core.async :refer [<!]]))
 
 (enable-console-print!)
 
@@ -13,7 +14,6 @@
 
 (defn greeting []
   [:div
-   [:button {:on-click #(do add-request)} "Add request"]
    [:button {:on-click (fn [] (go (let [requests (<! (http/get "/requests"))]
                                  (swap! app-state #(assoc % :requests (:body requests))))))}
     "Refresh requests"]
