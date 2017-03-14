@@ -13,7 +13,10 @@
                  [ring.middleware.logger "0.5.0"]
                  [compojure "1.5.0"]
                  [environ "1.0.3"]
-                 [reagent "0.6.0-rc"]]
+                 [reagent "0.6.0-rc"]
+                 [prismatic/schema "1.1.3"]
+                 [cljs-http "0.1.42"]
+                 ]
 
   :plugins [[lein-cljsbuild "1.1.3"]
             [lein-environ "1.0.3"]
@@ -101,27 +104,27 @@
 
              :server-logfile "log/figwheel.log"}
 
-  :doo {:build "test"}
+:doo {:build "test"}
 
 
-  :less {:source-paths ["src/less"]
-         :target-path "resources/public/css"}
+:less {:source-paths ["src/less"]
+       :target-path "resources/public/css"}
 
-  :profiles {:dev
-             {:dependencies [[figwheel "0.5.4-4"]
-                             [figwheel-sidecar "0.5.4-4"]
-                             [com.cemerick/piggieback "0.2.1"]
-                             [org.clojure/tools.nrepl "0.2.12"]]
+:profiles {:dev
+           {:dependencies [[figwheel "0.5.4-4"]
+                           [figwheel-sidecar "0.5.4-4"]
+                           [com.cemerick/piggieback "0.2.1"]
+                           [org.clojure/tools.nrepl "0.2.12"]]
 
-              :plugins [[lein-figwheel "0.5.4-4"]
-                        [lein-doo "0.1.6"]]
+            :plugins [[lein-figwheel "0.5.4-4"]
+                      [lein-doo "0.1.6"]]
 
-              :source-paths ["dev"]
-              :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}}
+            :source-paths ["dev"]
+            :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}}
 
-             :uberjar
-             {:source-paths ^:replace ["src/clj" "src/cljc"]
-              :prep-tasks ["compile" ["cljsbuild" "once" "min"]]
-              :hooks [leiningen.less]
-              :omit-source true
-              :aot :all}})
+           :uberjar
+           {:source-paths ^:replace ["src/clj" "src/cljc"]
+            :prep-tasks ["compile" ["cljsbuild" "once" "min"]]
+            :hooks [leiningen.less]
+            :omit-source true
+            :aot :all}})
