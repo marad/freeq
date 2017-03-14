@@ -5,7 +5,7 @@
             [cljs.core.async :refer [<!]]))
 
 (defn like-request [id]
-  (go (let [response (<! (http/post "/like-request/:id" {:query-params {"id" id}}))]
+  (go (let [response (<! (http/post (str "/like-request/" id)))]
         (go-index)
         )))
 
