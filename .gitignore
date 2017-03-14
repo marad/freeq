@@ -11,3 +11,8 @@ classes/
 *.iws
 /bin/
 
+
+.lein-env
+log
+resources/public/js
+target
