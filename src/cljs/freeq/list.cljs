@@ -1,7 +1,13 @@
 (ns freeq.list
   (:require-macros [cljs.core.async.macros :refer [go]])
   (:require [cljs-http.client :as http]
+            [freeq.state :refer [go-index refresh-requests]]
             [cljs.core.async :refer [<!]]))
+
+(defn like-request [id]
+  (go (let [response (<! (http/post "/like-request/:id" {:query-params {"id" id}}))]
+        (go-index)
+        )))
 
 (defn reqlist [requests]
   [:div
@@ -14,10 +20,14 @@
         [:div.desc (:desc request)]
         [:div
          [:span.likes (str " " (:likes request) " users likes this")]
-         [:span.likeit [:button "like it"]]
+         [:span.likeit
+          [:button
+           {:on-click (fn [] (like-request (:_id request)))}
+           "like it"]]
          ]
        ]
       ]
      )
     ]
    ])
+

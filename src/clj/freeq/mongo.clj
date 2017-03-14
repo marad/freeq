@@ -40,6 +40,10 @@
 (s/defn get-request :- Request [id]
   (mc/find @db request-collection {:_id id}))
 
+(s/defn like-request :- Request [id]
+  (mc/update @db request-collection {:_id id} {"$inc" {:likes 1}}))
+
+
 ;; Comments
 
 (s/defn add-comment :- (s/eq nil)

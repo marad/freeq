@@ -24,10 +24,8 @@
                    (requests/add-request body))
                  {:status 201})
 
-           (POST "/like-request" req
-                 (let [body (-> req :body slurp read-string)]
-                   (println "LIKING" body)
-                   )
+           (POST "/like-request/:id" [id]
+                 (requests/like-request id)
                  {:status 204})
 
            (GET "/" _

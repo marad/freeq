@@ -15,3 +15,7 @@
                        :likes 0)]
     (repo/add-request request)
     request))
+
+(s/defn like-request :- [Request]
+  [id]
+  (repo/like-request id))
