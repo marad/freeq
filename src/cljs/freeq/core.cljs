@@ -14,7 +14,7 @@
 
 (def pages {:index #(reqlist/reqlist (:requests @app-state))
             :add   addr/add-request
-            :comment cmnt/add-comment
+            :comment #(cmnt/add-comment (:request @app-state))
             })
 
 (defn render-page []

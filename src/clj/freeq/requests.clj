@@ -8,6 +8,9 @@
 (s/defn list-requests :- [Request] []
   (repo/get-requests))
 
+(s/defn get-request :- [Request] [id]
+        (repo/get-request id))
+
 (s/defn add-request :- [Request]
   [request :- PostRequest]
   (let [request (assoc request

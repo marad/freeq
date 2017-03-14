@@ -20,14 +20,18 @@
               :body    (str {:requests (requests/list-requests)})})
 
            (POST "/add-request" req
-                 (let [body (-> req :body slurp read-string)]
-                   (requests/add-request body))
-                 {:status 201})
+             (let [body (-> req :body slurp read-string)]
+               (requests/add-request body))
+             {:status 201})
 
            (POST "/like-request/:id" [id]
                  (requests/like-request id)
                  {:status 204})
-
+           (GET "/get-request/:id" [id]
+             {:status  200
+              :headers {"Content-Type" "appllication/edn"}
+              :body    (str {:request (requests/get-request id)})
+              })
            (GET "/" _
              {:status  200
               :headers {"Content-Type" "text/html; charset=utf-8"}

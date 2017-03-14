@@ -37,8 +37,8 @@
 (s/defn get-requests :- [Request] []
   (mc/find-maps @db request-collection {}))
 
-(s/defn get-request :- Request [id]
-  (mc/find @db request-collection {:_id id}))
+(s/defn get-request :- [Request] [id]
+  (mc/find-one-as-map @db request-collection {:_id id}))
 
 (s/defn like-request :- Request [id]
   (mc/update @db request-collection {:_id id} {"$inc" {:likes 1}}))
