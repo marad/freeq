@@ -37,6 +37,9 @@
 (s/defn get-requests :- [Request] []
   (mc/find-maps @db request-collection {}))
 
+(s/defn get-request :- Request [id]
+  (mc/find @db request-collection {:_id id}))
+
 ;; Comments
 
 (s/defn add-comment :- (s/eq nil)
