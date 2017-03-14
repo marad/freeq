@@ -5,7 +5,6 @@
 
 (defn reqlist [requests]
   [:div
-   [:button "Dodaj"]
    [:ul
     (for [request (:requests requests)]
       ^{:key (:_id request)}

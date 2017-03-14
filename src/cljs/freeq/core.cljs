@@ -8,7 +8,7 @@
 
 (enable-console-print!)
 
-(defonce app-state (atom {:text "Hello Chestnut!!"
+(defonce app-state (atom {:text "Requests list"
                           :requests []}))
 
 (defn greeting []
@@ -16,7 +16,7 @@
    [:button {:on-click #(do add-request)} "Add request"]
    [:button {:on-click (fn [] (go (let [requests (<! (http/get "/requests"))]
                                  (swap! app-state #(assoc % :requests (:body requests))))))}
-    "REFRESH LIST"]
+    "Refresh requests"]
    [:h1 (str (:text @app-state))]
    [:div (reqlist/reqlist (:requests @app-state))]
    ])
