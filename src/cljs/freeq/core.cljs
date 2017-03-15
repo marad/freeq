@@ -19,10 +19,10 @@
 
 (defn render-page []
   [:div
-   [:button {:on-click (fn []
-                         (swap! app-state #(assoc % :page :index))
-                         (refresh-requests))} "List"]
-   [:button {:on-click (fn [] (swap! app-state #(assoc % :page :add)))} "Add"]
+   [:button.btn.btn-default {:on-click (fn [] 
+                           (swap! app-state #(assoc % :page :index))
+                           (refresh-requests))} "List"]
+   [:button.btn.btn-default {:on-click (fn [] (swap! app-state #(assoc % :page :add)))} "Add"]
    ((pages (:page @app-state)))])
 
 (refresh-requests)
