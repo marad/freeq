@@ -8,16 +8,8 @@
 
 (enable-console-print!)
 
-(defn get-request [id]
-  (go (let [request (<! (http/get (str "/get-request/" id)))]
-        (swap! frState/app-state #(assoc % :request (:body request))))))
 
 (defn add-comment [request]
-  ;(println @frState/app-state)
-  (println "OKX")
-  (println request)
   [:div
    [:h1 (:title request)]
-   [:p (:desc request)]
-   ]
-  )
+   [:p (:desc request)]])
