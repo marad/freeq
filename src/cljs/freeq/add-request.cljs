@@ -8,34 +8,29 @@
 
 (enable-console-print!)
 
-(def state (atom {:doc {:title "Title" :desc "Desc"} :saved? false }))
+(def state (atom {:doc {:title "Title" :desc "Desc"} :saved? false}))
 
-
-(defn row [label input]
-  [:div.row
-   [:div.col-md-2 [:label label]]
-   [:div.col-md-5 input]])
 
 (defn input-element
   "An input element"
   [id name type]
-  [:input {:id       id
-           :name     name
-           :class    "form-control"
-           :type     type
-           :required ""
-           :value (get-in @state [:doc :title])
+  [:input {:id        id
+           :name      name
+           :class     "form-control"
+           :type      type
+           :required  ""
+           :value     (get-in @state [:doc :title])
            :on-change (fn [evt] (swap! state #(assoc-in % [:doc :title] (-> evt .-target .-value))))
            }])
 
 (defn textarea-element
   "An textarea element"
   [id name]
-  [:textarea {:id       id
-              :name     name
-              :class    "form-control"
-              :required ""
-              :value (get-in @state [:doc :desc])
+  [:textarea {:id        id
+              :name      name
+              :class     "form-control"
+              :required  ""
+              :value     (get-in @state [:doc :desc])
               :on-change (fn [evt] (swap! state #(assoc-in % [:doc :desc] (-> evt .-target .-value))))
               }])
 
@@ -45,12 +40,29 @@
         )))
 
 (defn add-request []
-  [:div [:h1 "Add request form"]
-   (row "Title" (input-element "title" "title" "text"))
-   (row "Description" (textarea-element "description" "description"))
-   [:button {:class "btn btn-default"
-             :on-click save-request}
-    "Submit"]
-   ]
-  )
+  [:div  {:class "row"}
+   [:div  {:class "col-md-6 col-md-offset-3 well bs-component"}
+    [:form {:class "form-horizontal"}
+     [:legend "Add request"]
+     [:div {:class "form-group"}
+      [:label {:class "col-lg-2 control-label"} "Title"]
+      [:div {:class "col-lg-10"}
+       (input-element "title" "title" "text")
+       ]
+      ]
+     [:div {:class "form-group"}
+      [:label {:class "col-lg-2 control-label"} "Description"]
+      [:div {:class "col-lg-10"}
+       (textarea-element "description" "description")
+       ]
+      ]
+     [:div {:class "form-group"}
+      [:div {:class "col-lg-10 col-lg-offset-2"}
+       [:input {:type     "button"
+                :class    "btn btn-default"
+                :on-click save-request
+                :value    "Submit"}]
+       ]]]
+    ]
+  ])
 
